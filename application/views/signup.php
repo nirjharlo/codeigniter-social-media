@@ -12,8 +12,14 @@
 	<div id="body">
 		<h2>Signup Form</h2>
 		<?php
-			if( !isset($insert) || $insert == false ) {
+			if( isset($insert) && $insert == false ) {
 				echo 'Invalid Credentials';
+			}
+			if (isset($uname_taken) && $uname_taken) {
+				echo "Username already taken";
+			}
+			if (isset($email_address_taken) && $email_address_taken) {
+				echo "Email Address already taken";
 			}
 			echo validation_errors();
 			echo form_open( 'signup/validate' );

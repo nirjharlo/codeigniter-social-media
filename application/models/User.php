@@ -15,7 +15,7 @@ class User extends CI_Model {
 		$this->db->where('pass_word', $password);
 		$query = $this->db->get('members');
 		
-		if($query->num_rows == 1) {
+		if($query->result_id->num_rows == 1) {
 			return true;
 		}		
 	}
@@ -38,31 +38,32 @@ class User extends CI_Model {
 		}
 		return $user;
 	}
-	
+
+	public function check($key, $value) {
+
+		$this->db->where($key, $value);
+		$query = $this->db->get('members');
+
+        if($query->result_id->num_rows > 0){
+			  return "already taken";
+		}
+	}
+
+
     /**
     * Store the new user's data into the database
-    * @return boolean - check the insert
+    * @return void
     */	
 	function signup($fname, $lname, $email, $uname, $pass) {
 
-		$this->db->where('user_name', $this->input->post('username'));
-		$query = $this->db->get('members');
-
-        if($query->num_rows > 0){
-			  echo "Username already taken";
-		} else {
-
-			$new_member_insert_data = array(
-				'first_name' => $fname,
-				'last_name' => $lname,
-				'email_addres' => $email,
-				'user_name' => $uname,
-				'pass_word' => $pass,
-			);
-			$insert = $this->db->insert('members', $new_member_insert_data);
-		    return $insert;
-		}
-
+		$new_member_insert_data = array(
+			'first_name' => $fname,
+			'last_name' => $lname,
+			'email_addres' => $email,
+			'user_name' => $uname,
+			'pass_word' => $pass,
+		);
+		$insert = $this->db->insert('members', $new_member_insert_data);
 	}
 }
 

@@ -28,22 +28,37 @@ class Loging extends CI_Controller {
 
 		$this->form_validation->set_rules('first_name', 'First Name', 'required');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'required');
-		$this->form_validation->set_rules('email_address', 'Email Address', 'required');
-		$this->form_validation->set_rules('email_address', 'Email Address', 'valid_email');
+		$this->form_validation->set_rules('email_address', 'Email Address', 'required|valid_email');
 		$this->form_validation->set_rules('username', 'Username', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
-		if ($this->form_validation->run() == FALSE) {
-			$this->load->view('signup');
-		} else {
+		if ($this->form_validation->run() == TRUE) {
 			$fname = $this->input->post('first_name');
 			$lname = $this->input->post('last_name');
 			$email = $this->input->post('email_address');			
 			$uname = $this->input->post('username');
 			$pass = $this->encrip_password($this->input->post('password'));
-			$data['insert'] = $this->User->signup($fname, $lname, $email, $uname, $pass);
 
-			$this->load->view('login', $data);
+			$uname_checked = $this->User->check('user_name', $uname);
+			$email_address_checked = $this->User->check('email_addres', $email);
+			if($uname_checked != false) {
+
+				$data['uname_taken'] = $uname_checked;
+				$this->load->view('signup', $data);
+
+			} elseif($email_address_checked != false) {
+
+				$data['email_address_taken'] = $email_address_checked;
+				$this->load->view('signup', $data);
+
+			} else {
+
+				$data['insert'] = $this->User->signup($fname, $lname, $email, $uname, $pass);
+				$this->load->view('login', $data);
+
+			}
+		} else {
+			$this->load->view('signup');
 		}
 	}
 
