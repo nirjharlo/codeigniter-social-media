@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Login to CodeIgniter Social Media</title>
+	<title>Signup to CodeIgniter Social Media</title>
 </head>
 <body>
 

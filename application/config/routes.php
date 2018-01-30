@@ -56,4 +56,6 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login/validate'] = 'Loging/validate';
 $route['signup'] = 'Loging/signup';
 $route['signup/validate'] = 'Loging/signup_submit';
+$route['profile'] = 'Profile';
+$route['list'] = 'List';
 ?>

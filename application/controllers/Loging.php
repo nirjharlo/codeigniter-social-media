@@ -33,6 +33,7 @@ class Loging extends CI_Controller {
 		$this->form_validation->set_rules('password', 'Password', 'required');
 
 		if ($this->form_validation->run() == TRUE) {
+
 			$fname = $this->input->post('first_name');
 			$lname = $this->input->post('last_name');
 			$email = $this->input->post('email_address');			
@@ -94,7 +95,7 @@ class Loging extends CI_Controller {
 				'is_logged_in' => true
 			);
 			$this->session->set_userdata($data);
-			redirect('admin/profile');
+			redirect('profile');
 
 		} else {
 

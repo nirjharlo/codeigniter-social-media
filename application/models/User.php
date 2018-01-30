@@ -9,8 +9,8 @@ class User extends CI_Model {
     * @param string $password
     * @return void
     */
-	function validate($user_name, $password)
-	{
+	function validate($user_name, $password) {
+
 		$this->db->where('user_name', $user_name);
 		$this->db->where('pass_word', $password);
 		$query = $this->db->get('members');
@@ -20,25 +20,35 @@ class User extends CI_Model {
 		}		
 	}
 
+	public function insert_image($uname, $image) {
+
+		$data = array('image' => $image);
+
+		$this->db->set($data);
+		$this->db->where('user_name', $uname);
+		$this->db->update('members', $data);
+	}
+
     /**
-    * Serialize the session data stored in the database, 
-    * store it in a new array and return it to the controller 
+    * Get the user data 
+    * @param $user_name
     * @return array
     */
-	function get_db_session_data()
-	{
-		$query = $this->db->select('user_data')->get('ci_sessions');
-		$user = array(); /* array to store the user data we fetch */
-		foreach ($query->result() as $row)
-		{
-		    $udata = unserialize($row->user_data);
-		    /* put data in array using username as key */
-		    $user['user_name'] = $udata['user_name']; 
-		    $user['is_logged_in'] = $udata['is_logged_in']; 
-		}
+	function get_data($uname) {
+
+		$this->db->where('user_name', $uname);
+		$query = $this->db->get('members');
+		$user = $query->result();
+
 		return $user;
 	}
 
+	/**
+	 * Check if username or email already exists or not
+	 * @param  string $key
+	 * @param  string $value
+	 * @return string
+	 */
 	public function check($key, $value) {
 
 		$this->db->where($key, $value);
