@@ -13,12 +13,13 @@
 		<h2>Welcome <?php echo $user_name; ?></h2>
 		<p><img src="/codeigniter-social-media/uploads/<?php echo $src; ?>" width="120" height="120"></p>
 
+		<?php if(!$specific) : ?>
 		<?php echo form_open_multipart('profile/do_upload');?>
 		<form action="" method="">
 			<input type="file" name="profile_image" /> 
 			<input type="submit" value="Upload New" /> 
 		</form>
-
+	<?php endif; ?>
 		<p><?php echo $first_name . ' ' . $last_name; ?></p>
 		<p><?php echo $email_addres; ?></p>
 		<p><a href="/codeigniter-social-media/list">List of members</a></p>

@@ -64,7 +64,7 @@ class User extends CI_Model {
     * Store the new user's data into the database
     * @return void
     */	
-	function signup($fname, $lname, $email, $uname, $pass) {
+	public function signup($fname, $lname, $email, $uname, $pass) {
 
 		$new_member_insert_data = array(
 			'first_name' => $fname,
@@ -75,5 +75,31 @@ class User extends CI_Model {
 		);
 		$insert = $this->db->insert('members', $new_member_insert_data);
 	}
-}
 
+	/**
+	 * Get all members data
+	 * @return array
+	 */
+	public function get_members() {
+
+		$export = array();
+
+		$query = $this->db->get('members');
+		$data = $query->result();
+
+		foreach($data as $part) {
+
+			$export_part = array();
+
+			$export_part['id'] = $part->id;
+			$export_part['name'] = $part->first_name . ' ' . $part->last_name;
+			$export_part['email'] = $part->email_addres;
+			$export_part['uname'] = $part->user_name;
+			$export_part['image'] = $part->image;
+
+			$export[] = $export_part;
+		}
+
+		return $export;
+	}
+}

@@ -57,5 +57,6 @@ $route['login/validate'] = 'Loging/validate';
 $route['signup'] = 'Loging/signup';
 $route['signup/validate'] = 'Loging/signup_submit';
 $route['profile'] = 'Profile';
-$route['list'] = 'List';
+$route['profile/:any'] = 'Profile/specific_profile';
+$route['list'] = 'Lists';
 ?>

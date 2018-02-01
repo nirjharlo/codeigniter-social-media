@@ -33,6 +33,25 @@ class Profile extends CI_Controller {
 		}
 	}
 
+	public function specific_profile() {
+
+		$user_name = $this->uri->segment(2);
+		$data['user_name'] = $user_name;
+
+		$this->load->model('User');
+		$user = $this->User->get_data($user_name);
+		$user_data = $user[0];
+
+		$data['first_name'] = $user_data->first_name;
+		$data['last_name'] = $user_data->last_name;
+		$data['email_addres'] = $user_data->email_addres;
+		$data['src'] = $user_data->image;
+		$data['specific'] = true;
+
+		$this->load->helper('form');
+		$this->load->view('profile', $data);
+	}
+
 	/**
 	 * Uploading image method
 	 * @return void
